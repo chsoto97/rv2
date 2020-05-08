@@ -12,10 +12,10 @@ int main(int argc, const char* argv[])
     cv::Mat img_2 = cv::imread("./IMG_CAL_DATA/right08.png", 0);
 
     //create feature detectors & descriptor extractors
-    int minHessian = 8000; //filter parameter
+    int minHessian = 2000; //filter parameter
   	cv::Ptr<SURF> SURF = SURF::create(minHessian);
-  	double contrastThreshold = 80; //filter parameter
-  	double edgeThreshold = 5; //filter parameter
+  	double contrastThreshold = 0.99; //filter parameter
+  	double edgeThreshold = 2; //filter parameter
   	Ptr<SIFT> SIFT = SIFT::create(contrastThreshold, edgeThreshold);
   	cv::Ptr<Feature2D> ORB = ORB::create();
 
@@ -30,9 +30,11 @@ int main(int argc, const char* argv[])
   	SURF->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match descriptors using BFMatcher
-  	BFMatcher matcher;
+  	int normType = NORM_L1; //should be different for each feature detector, but works well
+  	bool crossCheck = true; //match test
+  	Ptr<BFMatcher> matcher = BFMatcher::create(normType, crossCheck);
   	std::vector< DMatch > matches;
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
   	Mat img_matches;
@@ -51,7 +53,7 @@ int main(int argc, const char* argv[])
   	SIFT->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match descriptors using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -69,7 +71,7 @@ int main(int argc, const char* argv[])
   	ORB->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -89,7 +91,7 @@ int main(int argc, const char* argv[])
     featureExtractor->compute(img_2, keypoints_2, descriptors_2);
 
     //match descriptors using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -110,7 +112,7 @@ int main(int argc, const char* argv[])
   	SURF->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match descriptors using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -128,7 +130,7 @@ int main(int argc, const char* argv[])
   	SIFT->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match descriptors using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -146,7 +148,7 @@ int main(int argc, const char* argv[])
   	ORB->compute( img_2, keypoints_2, descriptors_2 );
 
   	//match using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
@@ -164,7 +166,7 @@ int main(int argc, const char* argv[])
     featureExtractor->compute(img_2, keypoints_2, descriptors_2);
 
     //match descriptors using BFMatcher
-  	matcher.match( descriptors_1, descriptors_2, matches );
+  	matcher->match( descriptors_1, descriptors_2, matches );
 
   	//draw results to image
     drawMatches( img_1, keypoints_1, img_2, keypoints_2, matches, img_matches, Scalar::all(-1),
