@@ -37,6 +37,7 @@ int main(int argc, const char* argv[])
 	cv::RNG rng(0); //random color generator
 	Mat img_1rgb; //complemental image with the same colors as epipolar_img for concatenation
 
+	//K matrix for each camera
 	double kl[3][3] = {{9.842439e+02, 0.000000e+00, 6.900000e+02}, {0.000000e+00, 9.808141e+02, 2.331966e+02}, {0.000000e+00, 0.000000e+00, 1.000000e+00}};
 	Mat KL = Mat(3, 3, CV_64F, kl);
 	double kr[3][3] = {{9.895267e+02, 0.000000e+00, 7.020000e+02}, {0.000000e+00, 9.878386e+02, 2.455590e+02}, {0.000000e+00, 0.000000e+00, 1.000000e+00}};
@@ -62,6 +63,7 @@ int main(int argc, const char* argv[])
   	//match descriptors using BFMatcher
   	matcher->knnMatch( descriptors_1, descriptors_2, allMatches, 2);
   	std::vector<DMatch> matches;
+  	//ratio test
   	ratio = 0.2;         
     for(int i = 0; i < allMatches.size(); i++){  
         if(allMatches[i][0].distance < ratio * allMatches[i][1].distance)
@@ -93,6 +95,7 @@ int main(int argc, const char* argv[])
 
 	}
 
+	//calculate matrix
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_8POINT);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
@@ -124,6 +127,7 @@ int main(int argc, const char* argv[])
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
     cv::imwrite("./LR/SURF/LR-SURF-epipolar-8pt.png", epipolar_img);
 
+    //calculate matrix
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 	
@@ -155,6 +159,7 @@ int main(int argc, const char* argv[])
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
     cv::imwrite("./LR/SURF/LR-SURF-epipolar-RANSAC.png", epipolar_img);
 
+    //calculate matrix
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
@@ -185,6 +190,7 @@ int main(int argc, const char* argv[])
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
     cv::imwrite("./LR/SURF/LR-SURF-epipolar-5pt.png", epipolar_img);
 
+    //debugging
     std::cout << "[DEBUG] Finished LR SURF" << std::endl;
     std::cout.flush();
 
