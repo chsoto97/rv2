@@ -1084,7 +1084,7 @@ int main(int argc, const char* argv[])
 	}
 
 	// initialize the points for the fundamental matrix calculation ... */
-	for( int i = 0; i < noOfLines; i++ )
+	for( int i = 0; i < point_count; i++ )
 	{
 	    points1fm[i] = keypoints_1[matches[i].queryIdx].pt;
 	    points2fm[i] = keypoints_2[matches[i].trainIdx].pt;
