@@ -50,10 +50,10 @@ int main(int argc, const char* argv[])
 
     drawKeypoints( img_1, keypoints_1, img_keypoints1 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left08-SURF.png", img_keypoints1);
+    cv::imwrite("./LR/SURF/left08-SURF.png", img_keypoints1);
     drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("right08-SURF.png", img_keypoints2);
+    cv::imwrite("./LR/SURF/right08-SURF.png", img_keypoints2);
     
   	//calculate descriptors   
   	SURF->compute( img_1, keypoints_1, descriptors_1 );
@@ -74,7 +74,7 @@ int main(int argc, const char* argv[])
 
 
   	//save image
-    cv::imwrite("LR-SURF.png", img_matches);
+    cv::imwrite("./LR/SURF/LR-SURF.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -97,7 +97,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file("LR-SURF-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file("./LR/SURF/LR-SURF-8pt.txt", cv::FileStorage::WRITE);
 	file << "Fundamental Matrix" << fundamental_matrix;
 	file << "Essential Matrix" << essential_matrix;
 
@@ -122,14 +122,14 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SURF-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LR/SURF/LR-SURF-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 	
 
 	//output to text file
-	cv::FileStorage file1("LR-SURF-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file1("./LR/SURF/LR-SURF-RANSAC.txt", cv::FileStorage::WRITE);
 	file1 << "Fundamental Matrix" << fundamental_matrix;
 	file1 << "Essential Matrix" << essential_matrix;
 
@@ -153,13 +153,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SURF-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LR/SURF/LR-SURF-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file16("LR-SURF-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file16("./LR/SURF/LR-SURF-5pt.txt", cv::FileStorage::WRITE);
 	file16 << "Fundamental Matrix" << fundamental_matrix;
 	file16 << "Essential Matrix" << essential_matrix;
 
@@ -183,7 +183,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SURF-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LR/SURF/LR-SURF-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LR SURF" << std::endl;
     std::cout.flush();
@@ -195,10 +195,10 @@ int main(int argc, const char* argv[])
 
     drawKeypoints( img_1, keypoints_1, img_keypoints1 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left08-SIFT.png", img_keypoints1);
+    cv::imwrite("./LR/SIFT/left08-SIFT.png", img_keypoints1);
     drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("right08-SIFT.png", img_keypoints2);
+    cv::imwrite("./LR/SIFT/right08-SIFT.png", img_keypoints2);
     
   	//calculate descriptors 
   	SIFT->compute( img_1, keypoints_1, descriptors_1 );
@@ -219,7 +219,7 @@ int main(int argc, const char* argv[])
                  Scalar::all(-1), std::vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
 
   	//save image
-    cv::imwrite("LR-SIFT.png", img_matches);
+    cv::imwrite("./LR/SIFT/LR-SIFT.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -241,7 +241,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file2("LR-SIFT-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file2("./LR/SIFT/LR-SIFT-8pt.txt", cv::FileStorage::WRITE);
 	file2 << "Fundamental Matrix" << fundamental_matrix;
 	file2 << "Essential Matrix" << essential_matrix;
 
@@ -265,13 +265,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SIFT-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LR/SIFT/LR-SIFT-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file3("LR-SIFT-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file3("./LR/SIFT/LR-SIFT-RANSAC.txt", cv::FileStorage::WRITE);
 	file3 << "Fundamental Matrix" << fundamental_matrix;
 	file3 << "Essential Matrix" << essential_matrix;
 
@@ -295,13 +295,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SIFT-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LR/SIFT/LR-SIFT-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file17("LR-SIFT-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file17("./LR/SIFT/LR-SIFT-5pt.txt", cv::FileStorage::WRITE);
 	file17 << "Fundamental Matrix" << fundamental_matrix;
 	file17 << "Essential Matrix" << essential_matrix;
 
@@ -325,7 +325,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-SIFT-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LR/SIFT/LR-SIFT-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LR SIFT" << std::endl;
     std::cout.flush();
@@ -337,10 +337,10 @@ int main(int argc, const char* argv[])
 
     drawKeypoints( img_1, keypoints_1, img_keypoints1 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left08-ORB.png", img_keypoints1);
+    cv::imwrite("./LR/ORB/left08-ORB.png", img_keypoints1);
     drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("right08-ORB.png", img_keypoints2);
+    cv::imwrite("./LR/ORB/right08-ORB.png", img_keypoints2);
 
   	//calculate descriptors
   	ORB->compute( img_1, keypoints_1, descriptors_1 );
@@ -361,7 +361,7 @@ int main(int argc, const char* argv[])
                  Scalar::all(-1), std::vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
 
   	//save image
-    cv::imwrite("LR-ORB.png", img_matches);
+    cv::imwrite("./LR/ORB/LR-ORB.png", img_matches);
 
     // initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -383,7 +383,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file4("LR-ORB-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file4("./LR/ORB/LR-ORB-8pt.txt", cv::FileStorage::WRITE);
 	file4 << "Fundamental Matrix" << fundamental_matrix;
 	file4 << "Essential Matrix" << essential_matrix;
 
@@ -407,13 +407,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-ORB-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LR/ORB/LR-ORB-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file5("LR-ORB-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file5("./LR/ORB/LR-ORB-RANSAC.txt", cv::FileStorage::WRITE);
 	file5 << "Fundamental Matrix" << fundamental_matrix;
 	file5 << "Essential Matrix" << essential_matrix;
 
@@ -437,13 +437,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-ORB-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LR/ORB/LR-ORB-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file18("LR-ORB-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file18("./LR/ORB/LR-ORB-5pt.txt", cv::FileStorage::WRITE);
 	file18 << "Fundamental Matrix" << fundamental_matrix;
 	file18 << "Essential Matrix" << essential_matrix;
 
@@ -467,7 +467,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-ORB-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LR/ORB/LR-ORB-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LR ORB" << std::endl;
     std::cout.flush();
@@ -480,10 +480,10 @@ int main(int argc, const char* argv[])
 
     drawKeypoints( img_1, keypoints_1, img_keypoints1 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left08-FAST.png", img_keypoints1);
+    cv::imwrite("./LR/FAST+BRIEF/left08-FAST.png", img_keypoints1);
     drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("right08-FAST.png", img_keypoints2);
+    cv::imwrite("./LR/FAST+BRIEF/right08-FAST.png", img_keypoints2);
 
     //create descriptor extractor and calculate descriptors
     Ptr<DescriptorExtractor> featureExtractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
@@ -505,7 +505,7 @@ int main(int argc, const char* argv[])
                  Scalar::all(-1), std::vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
 
   	//save image
-    cv::imwrite("LR-FAST+BRIEF.png", img_matches);
+    cv::imwrite("./LR/FAST+BRIEF/LR-FAST+BRIEF.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -527,7 +527,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file6("LR-FAST-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file6("./LR/FAST+BRIEF/LR-FAST-8pt.txt", cv::FileStorage::WRITE);
 	file6 << "Fundamental Matrix" << fundamental_matrix;
 	file6 << "Essential Matrix" << essential_matrix;
 
@@ -551,13 +551,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-FAST-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LR/FAST+BRIEF/LR-FAST-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file7("LR-FAST-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file7("./LR/FAST+BRIEF/LR-FAST-RANSAC.txt", cv::FileStorage::WRITE);
 	file7 << "Fundamental Matrix" << fundamental_matrix;
 	file7 << "Essential Matrix" << essential_matrix;
 
@@ -581,13 +581,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-FAST-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LR/FAST+BRIEF/LR-FAST-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file19("LR-FAST-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file19("./LR/FAST+BRIEF/LR-FAST-5pt.txt", cv::FileStorage::WRITE);
 	file19 << "Fundamental Matrix" << fundamental_matrix;
 	file19 << "Essential Matrix" << essential_matrix;
 
@@ -611,7 +611,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LR-FAST-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LR/FAST+BRIEF/LR-FAST-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LR FAST" << std::endl;
     std::cout.flush();
@@ -627,7 +627,7 @@ int main(int argc, const char* argv[])
 
   	drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left10-SURF.png", img_keypoints2);
+    cv::imwrite("./LL/SURF/left10-SURF.png", img_keypoints2);
 
   	//calculate descriptors 
   	SURF->compute( img_1, keypoints_1, descriptors_1 );
@@ -649,7 +649,7 @@ int main(int argc, const char* argv[])
 
 
   	//save image
-    cv::imwrite("LL-SURF.png", img_matches);
+    cv::imwrite("./LL/SURF/LL-SURF.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -672,7 +672,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file8("LL-SURF-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file8("./LL/SURF/LL-SURF-8pt.txt", cv::FileStorage::WRITE);
 	file8 << "Fundamental Matrix" << fundamental_matrix;
 	file8 << "Essential Matrix" << essential_matrix;
 
@@ -696,13 +696,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SURF-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LL/SURF/LL-SURF-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file9("LL-SURF-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file9("./LL/SURF/LL-SURF-RANSAC.txt", cv::FileStorage::WRITE);
 	file9 << "Fundamental Matrix" << fundamental_matrix;
 	file9 << "Essential Matrix" << essential_matrix;
 
@@ -726,13 +726,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SURF-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LL/SURF/LL-SURF-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file20("LL-SURF-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file20("./LL/SURF/LL-SURF-5pt.txt", cv::FileStorage::WRITE);
 	file20 << "Fundamental Matrix" << fundamental_matrix;
 	file20 << "Essential Matrix" << essential_matrix;
 
@@ -756,7 +756,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SURF-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LL/SURF/LL-SURF-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LL SURF" << std::endl;
     std::cout.flush();
@@ -768,7 +768,7 @@ int main(int argc, const char* argv[])
 
   	drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left10-SIFT.png", img_keypoints2);
+    cv::imwrite("./LL/SIFT/left10-SIFT.png", img_keypoints2);
 
   	//calculate descriptors 
   	SIFT->compute( img_1, keypoints_1, descriptors_1 );
@@ -790,7 +790,7 @@ int main(int argc, const char* argv[])
 
 
   	//save image
-    cv::imwrite("LL-SIFT.png", img_matches);
+    cv::imwrite("./LL/SIFT/LL-SIFT.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -813,7 +813,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file10("LL-SIFT-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file10("./LL/SIFT/LL-SIFT-8pt.txt", cv::FileStorage::WRITE);
 	file10 << "Fundamental Matrix" << fundamental_matrix;
 	file10 << "Essential Matrix" << essential_matrix;
 
@@ -837,13 +837,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SIFT-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LL/SIFT/LL-SIFT-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file11("LL-SIFT-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file11("./LL/SIFT/LL-SIFT-RANSAC.txt", cv::FileStorage::WRITE);
 	file11 << "Fundamental Matrix" << fundamental_matrix;
 	file11 << "Essential Matrix" << essential_matrix;
 
@@ -867,13 +867,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SIFT-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LL/SIFT/LL-SIFT-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file21("LL-SIFT-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file21("./LL/SIFT/LL-SIFT-5pt.txt", cv::FileStorage::WRITE);
 	file21 << "Fundamental Matrix" << fundamental_matrix;
 	file21 << "Essential Matrix" << essential_matrix;
 
@@ -897,7 +897,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-SIFT-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LL/SIFT/LL-SIFT-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LL SIFT" << std::endl;
     std::cout.flush();
@@ -909,7 +909,7 @@ int main(int argc, const char* argv[])
 
   	drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left10-ORB.png", img_keypoints2);
+    cv::imwrite("./LL/ORB/left10-ORB.png", img_keypoints2);
 
   	//calculate descriptors
   	ORB->compute( img_1, keypoints_1, descriptors_1 );
@@ -931,7 +931,7 @@ int main(int argc, const char* argv[])
 
 
   	//save image
-    cv::imwrite("LL-ORB.png", img_matches);
+    cv::imwrite("./LL/ORB/LL-ORB.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -954,7 +954,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file12("LL-ORB-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file12("./LL/ORB/LL-ORB-8pt.txt", cv::FileStorage::WRITE);
 	file12 << "Fundamental Matrix" << fundamental_matrix;
 	file12 << "Essential Matrix" << essential_matrix;
 
@@ -978,13 +978,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-ORB-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LL/ORB/LL-ORB-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file13("LL-ORB-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file13("./LL/ORB/LL-ORB-RANSAC.txt", cv::FileStorage::WRITE);
 	file13 << "Fundamental Matrix" << fundamental_matrix;
 	file13 << "Essential Matrix" << essential_matrix;
 
@@ -1008,13 +1008,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-ORB-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LL/ORB/LL-ORB-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file22("LL-ORB-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file22("./LL/ORB/LL-ORB-5pt.txt", cv::FileStorage::WRITE);
 	file22 << "Fundamental Matrix" << fundamental_matrix;
 	file22 << "Essential Matrix" << essential_matrix;
 
@@ -1038,7 +1038,7 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-ORB-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LL/ORB/LL-ORB-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LL ORB" << std::endl;
     std::cout.flush();
@@ -1050,7 +1050,7 @@ int main(int argc, const char* argv[])
 
     drawKeypoints( img_2, keypoints_2, img_keypoints2 );
     //-- Show detected (drawn) keypoints
-    cv::imwrite("left10-FAST.png", img_keypoints2);
+    cv::imwrite("./LL/FAST+BRIEF/left10-FAST.png", img_keypoints2);
 
     //calculate descriptors
 	featureExtractor->compute(img_1, keypoints_1, descriptors_1);
@@ -1060,7 +1060,7 @@ int main(int argc, const char* argv[])
   	allMatches.clear();
   	matcher->knnMatch( descriptors_1, descriptors_2, allMatches, 2);
   	matches.clear();   
-  	ratio = 0.8;      
+  	ratio = 0.5;      
     for(int i = 0; i < allMatches.size(); i++){  
         if(allMatches[i][0].distance < ratio * allMatches[i][1].distance)
             matches.push_back(allMatches[i][0]);
@@ -1072,7 +1072,7 @@ int main(int argc, const char* argv[])
 
 
   	//save image
-    cv::imwrite("LL-FAST+BRIEF.png", img_matches);
+    cv::imwrite("./LL/FAST+BRIEF/LL-FAST+BRIEF.png", img_matches);
 
 	// initialize the points for the epipolar lines ... */
 	for( int i = 0; i < noOfLines; i++ )
@@ -1095,7 +1095,7 @@ int main(int argc, const char* argv[])
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file14("LL-FAST-8pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file14("./LL/FAST+BRIEF/LL-FAST-8pt.txt", cv::FileStorage::WRITE);
 	file14 << "Fundamental Matrix" << fundamental_matrix;
 	file14 << "Essential Matrix" << essential_matrix;
 
@@ -1119,13 +1119,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-FAST-epipolar-8pt.png", epipolar_img);
+    cv::imwrite("./LL/FAST+BRIEF/LL-FAST-epipolar-8pt.png", epipolar_img);
 
 	fundamental_matrix = findFundamentalMat(points1fm, points2fm, FM_RANSAC);
 	essential_matrix = KR.t()*fundamental_matrix*KL;
 
 	//output to text file
-	cv::FileStorage file15("LL-FAST-RANSAC.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file15("./LL/FAST+BRIEF/LL-FAST-RANSAC.txt", cv::FileStorage::WRITE);
 	file15 << "Fundamental Matrix" << fundamental_matrix;
 	file15 << "Essential Matrix" << essential_matrix;
 
@@ -1149,13 +1149,13 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-FAST-epipolar-RANSAC.png", epipolar_img);
+    cv::imwrite("./LL/FAST+BRIEF/LL-FAST-epipolar-RANSAC.png", epipolar_img);
 
     essential_matrix = cv::findEssentialMat(points1fm, points2fm, Kavg, RANSAC);
     fundamental_matrix = KR.t().inv()*essential_matrix*KL.inv();
 
     //output to text file
-	cv::FileStorage file23("LL-FAST-5pt.txt", cv::FileStorage::WRITE);
+	cv::FileStorage file23("./LL/FAST+BRIEF/LL-FAST-5pt.txt", cv::FileStorage::WRITE);
 	file23 << "Fundamental Matrix" << fundamental_matrix;
 	file23 << "Essential Matrix" << essential_matrix;
 
@@ -1179,9 +1179,10 @@ int main(int argc, const char* argv[])
 	//output
 	cvtColor(img_1, img_1rgb, COLOR_GRAY2BGR);
 	hconcat(img_1rgb, epipolar_img, epipolar_img);
-    cv::imwrite("LL-FAST-epipolar-5pt.png", epipolar_img);
+    cv::imwrite("./LL/FAST+BRIEF/LL-FAST-epipolar-5pt.png", epipolar_img);
 
     std::cout << "[DEBUG] Finished LL FAST" << std::endl;
+    std::cout.flush();
 
   	return 0;
 }
